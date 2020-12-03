@@ -1,0 +1,26 @@
+{
+  type: 'custom_file_actions_write_binary',
+  module : 'custom_file_actions',
+  action : 'write_binary',
+  groupTitle : 'Custom File Actions',
+  groupIcon : 'fas fa-lg fa-file comp-data',
+  title : 'Save Remote Binary @@var(actionName)@@',
+  icon : 'fas fa-lg fa-file comp-data',
+  dataPickObject: true,
+
+  properties : [
+    {
+      group: 'File Location',
+      variables: [
+        { name: 'actionName', optionName: 'name', title: 'Name', 
+          type: 'text', required: true, defaultValue: ''},
+        { name: 'local_path', optionName: 'local_path', title: 'Save Path', 
+          type: 'folder', required: true, defaultValue: '', serverDataBindings: true},
+           { name: 'local_file', optionName: 'local_file', title: 'Save File Name', 
+          type: 'file', required: true, defaultValue: '', serverDataBindings: true},
+        { name: 'file_url', optionName: 'file_url', title: 'Remote URL', 
+          type: 'text', required: true, defaultValue: '', serverDataBindings: true}
+      ]
+    }
+  ]
+}
