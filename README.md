@@ -1,2 +1,2 @@
-# wappler_modules
+# Wappler Modules
 Custom Modules used to extend Wappler
