@@ -1,4 +1,5 @@
-{
+[
+  {
   type: 'custom_file_actions_write_binary',
   module : 'custom_file_actions',
   action : 'write_binary',
@@ -7,7 +8,9 @@
   title : 'Save Remote Binary @@var(actionName)@@',
   icon : 'fas fa-lg fa-file comp-data',
   dataPickObject: true,
-
+  dataScheme: [
+    {name: 'file_name', type: 'text'}
+  ],
   properties : [
     {
       group: 'File Location',
@@ -16,11 +19,41 @@
           type: 'text', required: true, defaultValue: ''},
         { name: 'local_path', optionName: 'local_path', title: 'Save Path', 
           type: 'folder', required: true, defaultValue: '', serverDataBindings: true},
-           { name: 'local_file', optionName: 'local_file', title: 'Save File Name', 
-          type: 'file', required: true, defaultValue: '', serverDataBindings: true},
+           
         { name: 'file_url', optionName: 'file_url', title: 'Remote URL', 
-          type: 'text', required: true, defaultValue: '', serverDataBindings: true}
+          type: 'text', required: true, defaultValue: '', serverDataBindings: true},
+          { name: 'output', optionName: 'output', title: 'Output', type: 'boolean', defaultValue: false }
+      ]
+    }
+  ]
+},
+  {
+  type: 'custom_file_actions_get_file_type',
+  module : 'custom_file_actions',
+  action : 'get_file_type',
+  groupTitle : 'Custom File Actions',
+  groupIcon : 'fas fa-lg fa-file comp-data',
+  title : 'Get File type @@var(actionName)@@',
+  icon : 'fas fa-lg fa-file comp-data',
+  dataPickObject: true,
+  dataScheme: [
+    {name: 'extension', type: 'text'},
+    {name: 'mime_type', type: 'text'}
+  ],
+  properties : [
+    {
+      group: 'File Location',
+      variables: [
+        { name: 'actionName', optionName: 'name', title: 'Name', 
+          type: 'text', required: true, defaultValue: ''},
+        { name: 'file_path', optionName: 'file_path', title: 'File Path', 
+          type: 'folder', required: true, defaultValue: '', serverDataBindings: true},
+           
+        { name: 'file_name', optionName: 'file_name', title: 'File Name', 
+          type: 'text', required: true, defaultValue: '', serverDataBindings: true},
+          { name: 'output', optionName: 'output', title: 'Output', type: 'boolean', defaultValue: false }
       ]
     }
   ]
 }
+]
