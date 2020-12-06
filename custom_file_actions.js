@@ -1,9 +1,11 @@
 // JavaScript Document
 exports.get_file_type = async function (options) {
-    //const http = require('https');
+    //determines the file type using the file-type package at https://www.npmjs.com/package/file-type
+    //makes determination using the file content rather than filename extension
+    //returns the mime type and extension
+    
     //for converting file paths provided in UI
     const { toSystemPath } = require('../../../lib/core/path');
-    //http.get('https://vito.uniqueideas.com/assets/img/food-1.jpg');
 
     //convert the user local_path provided in the API action to useable in the module
     let file_path = toSystemPath(this.parseRequired(this.parse(options.file_path), 'string', 'fs.exists: file_path is required.'));
@@ -25,6 +27,9 @@ exports.get_file_type = async function (options) {
 };
 
 exports.write_binary = async function (options) {
+    //retrieves a file via remote http request and saves the file to the local server
+    //names the file using a uuid
+    
     //for converting file paths provided in UI
     const { toSystemPath } = require('../../../lib/core/path');
 
