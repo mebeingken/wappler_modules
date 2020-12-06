@@ -1,10 +1,40 @@
 // JavaScript Document
-exports.write_binary = function (options) {
+exports.get_file_type = async function (options) {
+    //const http = require('https');
+    //for converting file paths provided in UI
+    const { toSystemPath } = require('../../../lib/core/path');
+    //http.get('https://vito.uniqueideas.com/assets/img/food-1.jpg');
+
+    //convert the user local_path provided in the API action to useable in the module
+    let file_path = toSystemPath(this.parseRequired(this.parse(options.file_path), 'string', 'fs.exists: file_path is required.'));
+
+    let file_name = this.parseRequired(options.file_name, 'string', 'parameter file_name is required.');
+
+    let file = file_path + "/" + file_name;
+
+    async function getExt() {
+        const FileType = require('file-type');
+        return await FileType.fromFile(file);
+        //=> {ext: 'png', mime: 'image/png'}
+    }
+
+    return await getExt();
+
+
+
+};
+
+exports.write_binary = async function (options) {
     //for converting file paths provided in UI
     const { toSystemPath } = require('../../../lib/core/path');
 
-    //required for retrieving and saving file
-    const http = require('https');
+    //uuid package
+    const { v4: uuidv4 } = require('uuid');
+
+    //required for retrieving 
+    const request = require('request');
+
+    //and saving file
     const fs = require('fs');
 
     //convert the user local_path provided in the API action to useable in the module
@@ -13,11 +43,29 @@ exports.write_binary = function (options) {
     //evaluate the data binding for remoteURL
     let remoteURL = this.parseRequired(options.file_url, 'string', 'parameter value is required.');
 
-    //open up the stream for writing the file
-    const file = fs.createWriteStream(path + '/' + options.local_file);
+    //generate uuid
+    let uuid = uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
 
-    //go get the file at the provided remote url
-    const request = http.get(remoteURL, function (response) {
-        response.pipe(file);
+    //set the filename
+    let file_name = path + '/' + uuid;
+
+    //create a promise that waits for the onclose event of the remote request
+    await new Promise(resolve => {
+        const download = (url, path) => {
+            request.head(url, (err, res, body) => {
+                request(url)
+                    .pipe(fs.createWriteStream(path)) // write the response (the remote file) into the designated location on the server
+                    .on('close', resolve) // resolve the promise on request close 
+            })
+        }
+
+        //trigger the download
+        download(remoteURL, file_name);
+
     });
+
+    //return the file_name
+    return { "file_name": uuid }
+
 };
+
