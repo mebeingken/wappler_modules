@@ -8,50 +8,56 @@ class custom_authentication extends Module
 {
   public function gen_key($options, $name) {
 
-  // setup the response object  
-  $response = new \StdClass;
+    // get dynamic values
+    $appName = $this->app->parseObject($options->applicationName);
 
-  // Create a TwoFactorAuth instance
-  require '../../vendor/autoload.php';
-  $tfa = new \RobThree\Auth\TwoFactorAuth('Unique Ideas');
+    // setup the response object  
+    $response = new \StdClass;
 
-  // gen secret
-  $secret = $tfa->createSecret();
+    // Create a TwoFactorAuth instance
+    require '../../vendor/autoload.php';
+    $tfa = new \RobThree\Auth\TwoFactorAuth($appName);
 
-  // gen qr url
-  $dataURL = $tfa->getQRCodeImageAsDataUri('', $secret); 
+    // gen secret
+    $secret = $tfa->createSecret();
 
-  // set the response values
-  $response->secret = $secret;
-  $response->dataURL = $dataURL;
+    // gen qr url
+    $dataURL = $tfa->getQRCodeImageAsDataUri('', $secret); 
 
-  // return respons
-  return $response;
+    // set the response values
+    $response->secret = $secret;
+    $response->dataURL = $dataURL;
+
+    // return respons
+    return $response;
 
   }
 
     public function verify_token($options, $name) {
 
-  // setup the response object  
-  $response = new \StdClass;
+      // get dynamic values
+      $user_token = $this->app->parseObject($options->user_token);
+      $secret = $this->app->parseObject($options->secret);
+      $appName = $this->app->parseObject($options->applicationName);
 
-  // Create a TwoFactorAuth instance
-  require '../../vendor/autoload.php';
-  $tfa = new \RobThree\Auth\TwoFactorAuth('Unique Ideas');
+      // setup the response object  
+      $response = new \StdClass;
 
-  // get dynamic values
-  $user_token = $this->app->parseObject($options->user_token);
-  $secret = $this->app->parseObject($options->secret);
+      // Create a TwoFactorAuth instance
+      require '../../vendor/autoload.php';
+      $tfa = new \RobThree\Auth\TwoFactorAuth($appName);
 
-  // Verify code
-  $result = $tfa->verifyCode($secret, $user_token);
 
-  // set the response values
-  $response->valid_token = $result;
 
-  //return $this->app->parseObject($options->value);
-  // return respons
-  return $response;
+      // Verify code
+      $result = $tfa->verifyCode($secret, $user_token);
+
+      // set the response values
+      $response->valid_token = $result;
+
+      //return $this->app->parseObject($options->value);
+      // return respons
+      return $response;
 
   }
 }
