@@ -40,7 +40,7 @@ exports.verify_token = async function (options) {
     let base32Secret = this.parseRequired(options.secret, 'string', 'parameter secret is required.');
 
     // validate the token
-    let valid_token = speakeasy.totp.verify({ secret: base32Secret, encoding: "base32", token: user_token, window: options.window, step: options.step });
+    let valid_token = speakeasy.totp.verify({ secret: base32Secret, encoding: "base32", token: user_token });
 
     // return the result
     return { "valid_token": valid_token };
