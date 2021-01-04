@@ -30,7 +30,7 @@ Copyright (c) 2012 Ryan Day
 
     npm i qrcode
 
-Copy custom_authentication.hjson and custom_authentication.php to the extensions/server_connect/modules folder in your project folder (create these folders if necessary)
+Copy custom_authentication.hjson and custom_authentication.js to the extensions/server_connect/modules folder in your project folder (create these folders if necessary)
 
 Restart Wappler
 
