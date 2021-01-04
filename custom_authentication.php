@@ -7,9 +7,11 @@ use \lib\core\Module;
 class custom_authentication extends Module
 {
   public function gen_key($options, $name) {
+    // https://github.com/RobThree/TwoFactorAuth
 
     // get dynamic values
     $appName = $this->app->parseObject($options->applicationName);
+
 
     // setup the response object  
     $response = new \StdClass;
@@ -34,18 +36,18 @@ class custom_authentication extends Module
   }
 
     public function verify_token($options, $name) {
+      //https://github.com/RobThree/TwoFactorAuth
 
       // get dynamic values
       $user_token = $this->app->parseObject($options->user_token);
       $secret = $this->app->parseObject($options->secret);
-      $appName = $this->app->parseObject($options->applicationName);
 
       // setup the response object  
       $response = new \StdClass;
 
       // Create a TwoFactorAuth instance
       require '../../vendor/autoload.php';
-      $tfa = new \RobThree\Auth\TwoFactorAuth($appName);
+      $tfa = new \RobThree\Auth\TwoFactorAuth();
 
 
 
