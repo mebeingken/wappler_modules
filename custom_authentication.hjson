@@ -47,10 +47,7 @@
           type: 'text', required: true, defaultValue: '', serverDataBindings: true, help: 'The authenticator code'},
           { name: 'secret', optionName: 'secret', title: 'User Secret', 
           type: 'text', required: true, defaultValue: '', serverDataBindings: true, help: 'The shared secret for this user'},
-          { name: 'window', optionName: 'window', title: 'TOTP Window', 
-          type: 'number', required: true, defaultValue: 1, help: 'You can specify a window to add more leeway to the verification process. Setting the window param will check for the token at the given counter value as well as window tokens ahead (one-sided window). ', serverDataBindings: false},
-          { name: 'step', optionName: 'step', title: 'TOTP Step', 
-          type: 'number', required: true, defaultValue: 30, serverDataBindings: false, help: 'A TOTP is incremented every step time-step seconds. By default, the time-step is 30 seconds. You may change the time-step using the step option, with units in seconds.'},
+          
         { name: 'output', optionName: 'output', title: 'Output', type: 'boolean', defaultValue: false }
       ]
     }
