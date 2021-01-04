@@ -11,15 +11,16 @@
   dataScheme: [
     {name: 'secret', type: 'text'},
     {name: 'dataURL', type: 'text'}
-  ],
+  ] ,
   properties : [
     {
       group: 'File Location',
       variables: [
         { name: 'actionName', optionName: 'name', title: 'Name', 
           type: 'text', required: true, defaultValue: ''},
-
-          { name: 'output', optionName: 'output', title: 'Output', type: 'boolean', defaultValue: false }
+        { name: 'applicationName', optionName: 'applicationName', title: 'Application Name',  
+          type: 'text', required: true, defaultValue: 'My Company', help: 'Displayed in Authentication App'},
+        { name: 'output', optionName: 'output', title: 'Output', type: 'boolean', defaultValue: false }
       ]
     }
   ]
